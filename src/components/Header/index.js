@@ -1,4 +1,4 @@
-import {Link, withRouter} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 import Cookies from 'js-cookie'
 
@@ -8,11 +8,11 @@ import {FiLogOut} from 'react-icons/fi'
 
 import './index.css'
 
-const Header = props => {
+function Header() {
+  const navigate = useNavigate()
   const removeAccess = () => {
     Cookies.remove('jwt_token')
-    const {history} = props
-    history.replace('/login')
+    navigate('/login', {replace: true})
   }
   return (
     <nav className="main-header-container">
@@ -33,6 +33,11 @@ const Header = props => {
           <li className="header-item">
             <Link to="/jobs" className="link">
               Jobs
+            </Link>
+          </li>
+          <li className="header-item">
+            <Link to="/profile" className="link">
+              Profile
             </Link>
           </li>
         </ul>
@@ -71,4 +76,4 @@ const Header = props => {
   )
 }
 
-export default withRouter(Header)
+export default Header

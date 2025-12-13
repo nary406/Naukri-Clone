@@ -1,18 +1,13 @@
 /* eslint-disable camelcase */
 import {Component} from 'react'
-
-import Loader from 'react-loader-spinner'
-
-import {BsStarFill} from 'react-icons/bs'
-
-import {MdLocationOn, MdWork} from 'react-icons/md'
-
-import {BiLinkExternal} from 'react-icons/bi'
-
+import {ThreeDots} from 'react-loader-spinner'
+import {BsStarFill, BsBuilding, BsPeopleFill} from 'react-icons/bs'
+import {MdLocationOn, MdWork, MdVerified} from 'react-icons/md'
+import {BiLinkExternal, BiTrendingUp} from 'react-icons/bi'
+import {FaCheckCircle, FaTimesCircle} from 'react-icons/fa'
 import Cookies from 'js-cookie'
-
 import Header from '../Header'
-
+import withRouter from '../withRouter'
 import './index.css'
 
 const appConstants = {
@@ -41,6 +36,16 @@ class JobItemDetails extends Component {
     const {skills} = eachValue
     const {lifeAtCompany} = eachValue
     const similarJobs = similarJob
+
+    // Mock data for new features
+    const matchPercentage = Math.floor(Math.random() * (95 - 60) + 60)
+    const missingSkills = ['Docker', 'GraphQL']
+    const interviewQuestions = [
+      'What are the key features of React?',
+      'Explain the Virtual DOM.',
+      'How do you handle state management?',
+    ]
+
     return (
       <div className="job-item-success-container">
         <div className="top-container">
@@ -55,9 +60,11 @@ class JobItemDetails extends Component {
               <div className="rating-holder">
                 <BsStarFill className="star-image" />
                 <p className="rating">{eachValue.rating}</p>
+                <span className="review-count">(120 Reviews)</span>
               </div>
             </div>
           </div>
+
           <div className="job-middle-container">
             <div className="location-holder">
               <div className="icon-holder">
@@ -71,7 +78,59 @@ class JobItemDetails extends Component {
             </div>
             <p className="salary">{eachValue.packagePerAnnum}</p>
           </div>
+
           <hr />
+
+          {/* Skill Match Meter */}
+          <div className="skill-match-section">
+            <h2 className="section-heading">Skill Match</h2>
+            <div className="match-meter-container">
+              <div className="match-bar-bg">
+                <div
+                  className="match-bar-fill"
+                  style={{width: `${matchPercentage}%`}}
+                />
+              </div>
+              <span className="match-percentage">{matchPercentage}% Match</span>
+            </div>
+            <div className="missing-skills">
+              <span className="missing-label">Missing: </span>
+              {missingSkills.map(skill => (
+                <span key={skill} className="missing-skill-tag">
+                  <FaTimesCircle className="missing-icon" /> {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Company Insights */}
+          <div className="company-insights-section">
+            <h2 className="section-heading">Company Insights</h2>
+            <div className="insights-grid">
+              <div className="insight-card">
+                <BsBuilding className="insight-icon" />
+                <div>
+                  <p className="insight-label">Employees</p>
+                  <p className="insight-value">1000-5000</p>
+                </div>
+              </div>
+              <div className="insight-card">
+                <BiTrendingUp className="insight-icon" />
+                <div>
+                  <p className="insight-label">Hiring Trend</p>
+                  <p className="insight-value text-green">+15% this month</p>
+                </div>
+              </div>
+              <div className="insight-card">
+                <BsPeopleFill className="insight-icon" />
+                <div>
+                  <p className="insight-label">Similar Roles</p>
+                  <p className="insight-value">24 Openings</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="desc-holder">
             <h1 className="description-heading">Description</h1>
             <a
@@ -85,6 +144,7 @@ class JobItemDetails extends Component {
             </a>
           </div>
           <p className="description-para">{eachValue.jobDescription}</p>
+
           <h1 className="skills-heading">Skills</h1>
           <ul className="skills-list">
             {skills.map(eachItem => (
@@ -98,6 +158,20 @@ class JobItemDetails extends Component {
               </li>
             ))}
           </ul>
+
+          {/* Interview Questions Preview */}
+          <div className="interview-questions-section">
+            <h2 className="section-heading">Interview Questions Preview</h2>
+            <ul className="questions-list">
+              {interviewQuestions.map((q, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <li key={index} className="question-item">
+                  <span className="question-bullet">Q.</span> {q}
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <h1 className="life-at-company-heading">Life at Company</h1>
           <div className="life-at-company-holder">
             <p className="life-at-company-description">
@@ -110,6 +184,7 @@ class JobItemDetails extends Component {
             />
           </div>
         </div>
+
         <div className="bottom-container">
           <h1 className="similar-heading">Similar Jobs</h1>
           <ul className="similar-list">
@@ -240,10 +315,11 @@ class JobItemDetails extends Component {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   loaderView = () => (
     <div className="main-loader-container">
       <div className="loader-container" data-testid="loader">
-        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+        <ThreeDots color="#ffffff" height="50" width="50" />
       </div>
     </div>
   )
@@ -258,4 +334,4 @@ class JobItemDetails extends Component {
   }
 }
 
-export default JobItemDetails
+export default withRouter(JobItemDetails)

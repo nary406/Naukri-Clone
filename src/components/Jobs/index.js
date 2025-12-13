@@ -1,6 +1,6 @@
 import {Component} from 'react'
 
-import Loader from 'react-loader-spinner'
+import {ThreeDots} from 'react-loader-spinner'
 
 import {BsSearch, BsStarFill} from 'react-icons/bs'
 
@@ -194,6 +194,14 @@ class Jobs extends Component {
         {jobData.map(eachValue => (
           <li className="job-item" key={eachValue.id}>
             <Link to={`/jobs/${eachValue.id}`} className="link">
+              <div className="badge-container">
+                {Math.random() > 0.5 && (
+                  <span className="badge badge-new">New</span>
+                )}
+                {Math.random() > 0.7 && (
+                  <span className="badge badge-verified">Verified</span>
+                )}
+              </div>
               <div className="icon-container">
                 <img
                   src={eachValue.companyLogoUrl}
@@ -224,6 +232,7 @@ class Jobs extends Component {
               <hr />
               <h1 className="description">Description</h1>
               <p className="description-para">{eachValue.jobDescription}</p>
+              <span className="quick-apply-tag">⚡ Quick Apply Available</span>
             </Link>
           </li>
         ))}
@@ -252,10 +261,11 @@ class Jobs extends Component {
     </div>
   )
 
+  // eslint-disable-next-line class-methods-use-this
   loaderView = () => (
     <div className="main-loader-container">
       <div className="loader-container" data-testid="loader">
-        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+        <ThreeDots color="#ffffff" height="50" width="50" />
       </div>
     </div>
   )
@@ -286,6 +296,7 @@ class Jobs extends Component {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   noJobView = () => (
     <div className="main-no-job-container">
       <img

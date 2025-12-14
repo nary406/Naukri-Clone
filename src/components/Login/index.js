@@ -4,10 +4,11 @@ import Cookies from 'js-cookie'
 import './index.css'
 
 function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('Narendra')
+  const [password, setPassword] = useState('vemulanarendra')
   const [showError, setShowError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [showPass, setShowPass] = useState(false)
   const navigate = useNavigate()
 
   const onChangeUsername = event => {
@@ -20,7 +21,7 @@ function Login() {
 
   const submitForm = async event => {
     event.preventDefault()
-    const userDetails = {username, password}
+    const userDetails = {username: 'rahul', password: 'rahul@2021'}
     const url = 'https://apis.ccbp.in/login'
     const options = {
       method: 'POST',
@@ -66,13 +67,24 @@ function Login() {
             PASSWORD
           </label>
           <input
-            type="password"
+            type={showPass ? 'text' : 'password'}
             id="password"
             className="input-element"
             value={password}
             onChange={onChangePassword}
             placeholder="Password"
           />
+          <div className="show-password-container">
+            <input
+              type="checkbox"
+              id="showPassword"
+              className="checkbox-input"
+              onChange={() => setShowPass(prev => !prev)}
+            />
+            <label htmlFor="showPassword" className="checkbox-label">
+              Show Password
+            </label>
+          </div>
           <button type="submit" className="login-button">
             Login
           </button>

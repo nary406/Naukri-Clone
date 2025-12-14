@@ -78,3 +78,26 @@
     height: 400px;
   }
 }
+
+.show-password-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.checkbox-input {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-weight: 500;
+}
